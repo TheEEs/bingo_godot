@@ -1,0 +1,182 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://scripts/numbers.gd" type="Script" id=1]
+[ext_resource path="res://assets/UIpack_vector.svg" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/Alata-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/icon_button.png" type="Texture" id=4]
+[ext_resource path="res://scenes/your_turn.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://assets/fonts/Alata-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+font_data = SubResource( 2 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 423, 245, 187, 43 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 421, 182, 190, 47 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 12
+font_data = ExtResource( 3 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 5
+atlas = ExtResource( 4 )
+region = Rect2( 977, 364, 152, 151 )
+filter_clip = true
+
+[sub_resource type="DynamicFont" id=8]
+size = 12
+font_data = ExtResource( 3 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 5
+atlas = ExtResource( 4 )
+region = Rect2( 527, 625, 152, 152 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 12
+font_data = ExtResource( 3 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 5
+atlas = ExtResource( 4 )
+region = Rect2( 306, 364, 151, 151 )
+
+[node name="numbers" type="Control"]
+margin_left = 10.0
+margin_top = 81.0
+margin_right = 350.0
+margin_bottom = 421.0
+rect_pivot_offset = Vector2( 170, 170 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="your_turn" parent="." instance=ExtResource( 5 )]
+position = Vector2( 170, 370 )
+
+[node name="labels" type="HSplitContainer" parent="."]
+anchor_top = -0.062
+anchor_right = 1.0
+margin_top = -33.92
+margin_bottom = -34.0
+split_offset = 170
+dragger_visibility = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="my_id" type="Label" parent="labels"]
+margin_right = 170.0
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 1 )
+
+[node name="opponent_id" type="Label" parent="labels"]
+margin_left = 170.0
+margin_right = 340.0
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 3 )
+align = 2
+
+[node name="progresses" type="HSplitContainer" parent="."]
+anchor_top = -0.093
+anchor_right = 1.0
+anchor_bottom = -0.038
+split_offset = 90
+dragger_visibility = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="progress_bar" type="TextureProgress" parent="progresses"]
+margin_right = 170.0
+margin_bottom = 18.7
+grow_horizontal = 0
+rect_min_size = Vector2( 80, 0 )
+max_value = 5.0
+step = 0.1
+texture_progress = SubResource( 4 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="progress_bar2" type="TextureProgress" parent="progresses"]
+margin_left = 182.0
+margin_right = 340.0
+margin_bottom = 18.7
+rect_min_size = Vector2( 80, 0 )
+max_value = 5.0
+step = 0.1
+texture_progress = SubResource( 5 )
+fill_mode = 1
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttons" type="HBoxContainer" parent="."]
+anchor_left = 0.003
+anchor_top = 1.401
+anchor_right = 1.0
+anchor_bottom = 1.603
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="quit" type="Button" parent="buttons"]
+margin_left = 16.0
+margin_right = 106.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 90, 90 )
+custom_fonts/font = SubResource( 6 )
+text = "Thoát"
+icon = SubResource( 7 )
+flat = true
+expand_icon = true
+
+[node name="shuffle" type="Button" parent="buttons"]
+margin_left = 110.0
+margin_right = 227.0
+margin_bottom = 90.0
+grow_horizontal = 0
+rect_min_size = Vector2( 117, 70 )
+custom_fonts/font = SubResource( 8 )
+text = "Bảng mới "
+icon = SubResource( 9 )
+flat = true
+expand_icon = true
+
+[node name="play" type="Button" parent="buttons"]
+margin_left = 231.0
+margin_right = 321.0
+margin_bottom = 90.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 90, 70 )
+custom_fonts/font = SubResource( 10 )
+disabled = true
+text = "Play"
+icon = SubResource( 11 )
+flat = true
+expand_icon = true
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="pressed" from="buttons/quit" to="." method="_on_quit"]
+[connection signal="pressed" from="buttons/shuffle" to="." method="shuffle"]
+[connection signal="pressed" from="buttons/play" to="." method="play"]

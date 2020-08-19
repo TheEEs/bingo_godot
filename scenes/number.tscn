@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/Rowdies-Regular.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 26
+font_data = ExtResource( 1 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+
+var position : Vector2
+var number : int 
+
+
+signal selected
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+func _input(event):
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			if not self.disabled and self.get_global_rect().has_point(event.position):
+				emit_signal(\"selected\",number,position)
+			
+"
+
+[node name="number" type="Button"]
+margin_right = 68.0
+margin_bottom = 68.0
+rect_clip_content = true
+custom_fonts/font = SubResource( 1 )
+button_mask = 0
+flat = true
+clip_text = true
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
