@@ -3,7 +3,7 @@
 # Bingo
 > A turn-based online game in which two players attempt to win by forming 5 lines(horizontal, vertical,diagonal) from numbers they choose on the board.
 
-Thanks to Godot, my favorite game engine with an excellent multi-player API for helping me making my idea real.
+Thank Godot, my favorite game engine with an excellent multi-player API for helping me making my idea real.
 
 ## How to play
 
