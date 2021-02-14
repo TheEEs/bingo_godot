@@ -2,12 +2,14 @@ extends Node
 
 signal new_player_joined
 
-const LISTEN_PORT = 7498
+var listening_port = OS.get_environment("PORT").to_int() if  OS.get_environment("PORT")  else  7498
 
 var my_room
 
 var PlayScene = load("res://scenes/numbers.tscn")
 const WelcomeScene = preload("res://scenes/welcome.tscn")
+
+var timer = Timer.new()
 
 var peer_ids = {}
 
@@ -25,19 +27,28 @@ func _ready():
 		_create_server()
 
 func _create_server():
+	print(listening_port)
 	var peer = WebSocketServer.new()
-	peer.listen(LISTEN_PORT,PoolStringArray(),true)
+	peer.listen(listening_port,PoolStringArray(),true)
 	get_tree().network_peer = peer
 
 func _connect_to_server():
 	var peer = WebSocketClient.new()
-	peer.connect_to_url("ws://53d9e6efebd5.ngrok.io",PoolStringArray(),true)
+	peer.connect_to_url("ws://trandatbingoserver.herokuapp.com",PoolStringArray(),true)
 	get_tree().network_peer = peer
+	add_child(timer)
+	timer.autostart = true 
+	timer.connect("timeout",self,"time_out")
 
 func _network_peer_connected(id):
-	print(id)
+	pass
 
-
+func time_out():
+	rpc_id(1,"do_nothing")
+	
+	
+remote func do_nothing():
+	pass
 
 func _network_peer_disconnected(id):
 	peer_ids.erase(id)

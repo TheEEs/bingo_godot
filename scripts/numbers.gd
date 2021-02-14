@@ -21,7 +21,7 @@ remote var partner_playable : bool = false
 remote var current_turn : int
 remote var end_game 
 onready var tween = $"Tween"
-
+onready var fp_label = $"first_player_label"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -86,6 +86,12 @@ func _new_player_joined(player_id):
 	var which_turn = $"/root/Singleton".my_id if random_number % 2 else $"/root/Singleton".my_partner
 	self.current_turn = which_turn
 	rset_id($"/root/Singleton".my_partner,"current_turn",which_turn)
+	self.tell_me_if_I_am_on_the_first_turn(self.current_turn)
+	rpc_id(player_id,"tell_me_if_I_am_on_the_first_turn",self.current_turn)
+
+remote func tell_me_if_I_am_on_the_first_turn(turn : int):
+	if turn == $"/root/Singleton".my_id:
+		fp_label.text = "bạn đi trước"
 	
 remote func your_turn():
 	$"your_turn/fader".play("fade_in")
@@ -94,6 +100,7 @@ func _on_number_selected(number,position):
 	if self.ready_to_play() \
 		and self.current_turn == $"/root/Singleton".my_id \
 		and not self.end_game:
+		fp_label.text = ""
 		print_debug(number_matrix[position].number)
 		if number_matrix[position].number:#rpc_id($"/root/Singleton".my_partner,"select",number,position)
 			rpc_id(
@@ -177,3 +184,4 @@ func play():
 	$"buttons/shuffle".disabled= true
 	self.me_playable = true
 	rset_id($"/root/Singleton".my_partner,"partner_playable", true)
+	

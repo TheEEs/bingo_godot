@@ -177,6 +177,12 @@ flat = true
 expand_icon = true
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="first_player_label" type="Label" parent="."]
+anchor_top = 1.117
+anchor_right = 1.0
+anchor_bottom = 1.208
+margin_bottom = -0.03302
 [connection signal="pressed" from="buttons/quit" to="." method="_on_quit"]
 [connection signal="pressed" from="buttons/shuffle" to="." method="shuffle"]
 [connection signal="pressed" from="buttons/play" to="." method="play"]
